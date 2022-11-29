@@ -68,7 +68,7 @@ with st.expander("Category top rated movies",
     col_rate, col_ascend, col_count = st.columns([2, 1, 2])
 
     default_options = {"content_rating" : 0,
-                       "genre"          : 5
+                       "genre"          : 5}
     default_choice = default_options[choice]
 
     # Category choice
