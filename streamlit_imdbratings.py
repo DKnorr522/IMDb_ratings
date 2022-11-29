@@ -30,20 +30,19 @@ st.header(f"Data taken from: {url}")
 
 # Make "rating" a category
 movies["content_rating"] = movies["content_rating"].astype("category")
-movies["content_rating"].cat.set_categories(["APPROVED",
-                                             "PASSED",
-                                             "NOT RATED",
-                                             "G",
-                                             "GP",
-                                             "PG",
-                                             "PG-13",
-                                             "TV-MA",
-                                             "R",
-                                             "NC-17",
-                                             "X"
-                                             ],
-                                            ordered=True,
-                                            inplace=True)
+movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
+                                                                        "PASSED",
+                                                                        "NOT RATED",
+                                                                        "G",
+                                                                        "GP",
+                                                                        "PG",
+                                                                        "PG-13",
+                                                                        "TV-MA",
+                                                                        "R",
+                                                                        "NC-17",
+                                                                        "X"
+                                                                        ],
+                                                                       ordered=True)
 movies["genre"] = movies["genre"].astype("category") # Make "genre" a category
 
 # Create a heat map showing relationship between rating and genre
