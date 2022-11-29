@@ -74,7 +74,7 @@ with st.expander("Category top rated movies",
     # Category choice
     cat_choice = col_rate.selectbox("Select rating",
                                     options=list(movies[choice].unique()),
-                                    default=default_choice)
+                                     index=default_choice)
 
     order = col_ascend.radio("List order",
                              options=["Highest", "Lowest"])
