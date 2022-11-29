@@ -3,11 +3,27 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
+
+def actors_to_list(actors_str):
+    actors_stripped = actros_str[1:-1]
+    actors_split = actors_stripped.split(', ')
+    actors_list = [name[2:-1] for name in actors_split]
+    return actors_list
+
 # Load in data
 url = "http://bit.ly/imdbratings"
 movies = pd.read_csv(url)
 
+# Convert actors names from string to list of strings
+movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
+
 # Need to fix Elliot Page deadnaming
+deadnames = {"Ellen Page": "Elliot Page"}
+for i, row in movies.iterrows():
+    for name in names.keys():
+        if name in row["actors_list"]:
+            index = row["actors_list"].index(name)
+            movies.iloc[i]["actors_list"][index] = deadnames[name]
 
 st.title("IMDb Movies")
 st.header(f"Data taken from: {url}")
