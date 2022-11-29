@@ -5,7 +5,7 @@ import streamlit as st
 
 
 def actors_to_list(actors_str):
-    actors_stripped = actros_str[1:-1]
+    actors_stripped = actors_str[1:-1]
     actors_split = actors_stripped.split(', ')
     actors_list = [name[2:-1] for name in actors_split]
     return actors_list
