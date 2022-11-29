@@ -87,7 +87,7 @@ st.pyplot(box)
 with st.expander("Category top rated movies",
                  expanded=True):
     # Columns
-    col_rate, col_ascend, col_count = st.columns([2, 1, 2])
+    col_rate, col_count, col_ascend, col_sort = st.columns([4, 5, 2, 4])
 
     default_options = {"content_rating": 5,
                        "genre"         : 0}
@@ -98,14 +98,26 @@ with st.expander("Category top rated movies",
                                     options=list(movies[choice].unique()),
                                      index=default_choice)
 
+    movie_count = int(movies[movies[choice]==cat_choice]['title'].count())
+    col_count.write(f"Number of {cat_choice} movies: {movie_count}")
+    num_movies = col_count.slider("Number of movies to show",
+                                  min_value=0,
+                                  max_value=movie_count,
+                                  value=movie_count,
+                                  step=1)
+
     order = col_ascend.radio("List order",
                              options=["Highest", "Lowest"])
-
-    col_count.write(f"Number of {cat_choice} movies: {movies[movies[choice]==cat_choice]['title'].count()}")
-
     ascend = True if order == "Lowest" else False
+
+    sort_options = list(movies.columns[:5])
+    sort_options.remove(choice)
+    sort_col = col_sort.selectbox("Sort by:",
+                                  options=sort_options)
+
     st.table(movies[movies[choice] == cat_choice]
              .drop(choice, axis=1)
-             .sort_values("star_rating",
+             .head(num_movies)
+             .sort_values(sort_col,
                           ascending=ascend)
              )
