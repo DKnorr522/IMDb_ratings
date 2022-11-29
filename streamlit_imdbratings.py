@@ -20,7 +20,7 @@ movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 # Need to fix Elliot Page deadnaming
 deadnames = {"Ellen Page": "Elliot Page"}
 for i, row in movies.iterrows():
-    for name in names.keys():
+    for name in deadnames.keys():
         if name in row["actors_list"]:
             index = row["actors_list"].index(name)
             movies.iloc[i]["actors_list"][index] = deadnames[name]
