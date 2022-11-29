@@ -7,6 +7,8 @@ import streamlit as st
 url = "http://bit.ly/imdbratings"
 movies = pd.read_csv(url)
 
+# Need to fix Elliot Page deadnaming
+
 st.title("IMDb Movies")
 st.header(f"Data taken from: {url}")
 
@@ -45,8 +47,8 @@ with st.expander("Movie categories average rating"):
     st.table(movies.groupby("content_rating")["star_rating"].mean())
 
 
-box_choices = {"Rating" : "content_rating",
-               "Genre"  : "genre"
+box_choices = {"Rating": "content_rating",
+               "Genre" : "genre"
                }
 box_choice = st.radio("Choose",
                       options=box_choices.keys())
@@ -67,8 +69,8 @@ with st.expander("Category top rated movies",
     # Columns
     col_rate, col_ascend, col_count = st.columns([2, 1, 2])
 
-    default_options = {"content_rating" : 5,
-                       "genre"          : 0}
+    default_options = {"content_rating": 5,
+                       "genre"         : 0}
     default_choice = default_options[choice]
 
     # Category choice
