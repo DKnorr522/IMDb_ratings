@@ -45,16 +45,21 @@ movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVE
                                                                        ordered=True)
 movies["genre"] = movies["genre"].astype("category") # Make "genre" a category
 
-# Create a heat map showing relationship between rating and genre
-heat = plt.figure()
-heat_pivot = pd.pivot_table(movies,
-                            values="star_rating",
-                            index="genre",
-                            columns="content_rating")
-sns.heatmap(heat_pivot,
-            cmap="Greens",
-            annot=False)
-st.pyplot(heat)
+# Create a heat map showing relationship between genre and either rating or duration
+with st.container():
+    heat_values = st.radio("Select which data to see",
+                      options=["star_rating",
+                               "duration"])
+    heat = plt.figure()
+    heat_pivot = pd.pivot_table(movies,
+                                values=heat_values,
+                                index="genre",
+                                columns="content_rating")
+    sns.heatmap(heat_pivot,
+                cmap="Greens",
+                annot=False)
+    plt.title(f"Heatmap of {heat_values} by Genre and Content Rating")
+    st.pyplot(heat)
 
 
 # Want to expand this to show a plot
