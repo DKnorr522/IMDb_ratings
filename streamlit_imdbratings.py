@@ -2,8 +2,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
-import numpy as np
-import math
 
 
 def actors_to_list(actors_str):
@@ -20,15 +18,7 @@ movies = pd.read_csv(url)
 movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 
 # Remove NaN values from content_rating
-ratings = movies['content_rating'].unique()
-# for rating in ratings:
-#     st.write(f"{rating = }\t{type(rating) = }")
-#     st.write(f"{pd.isna(rating) = }")
-# movies['content_rating'] = movies['content_rating'].replace(to_replace=pd.nan,
-#                                                             value='NONE')
 movies['content_rating'][pd.isna(movies['content_rating'])] = 'NOT RATED'
-st.write(movies['content_rating'].unique())
-st.table(movies[movies['content_rating']=='NONE'])
 
 # Need to fix Elliot Page deadnaming
 deadnames = {"Ellen Page": "Elliot Page"}
