@@ -21,8 +21,7 @@ movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 # Remove NaN values from content_rating
 ratings = movies['content_rating'].unique()
 for rating in ratings:
-    st.write(f"{rating = }")
-    st.write(f"{type(rating)}", end="\n\n")
+    st.write(f"{rating = }\t{type(rating) = }")
 movies['content_rating'] = movies['content_rating'].replace(to_replace='np.nan',
                                                             value='NONE')
 
