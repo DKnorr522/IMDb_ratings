@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import numpy as np
 
-
 def actors_to_list(actors_str):
     actors_stripped = actors_str[1:-1]
     actors_split = actors_stripped.split(', ')
