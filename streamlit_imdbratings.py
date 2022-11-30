@@ -36,12 +36,12 @@ movies["content_rating"] = movies["content_rating"].astype("category")
 movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
                                                                         "PASSED",
                                                                         "NOT RATED",
+                                                                        "UNRATED",
                                                                         "G",
                                                                         "GP",
                                                                         "PG",
                                                                         "PG-13",
                                                                         "TV-MA",
-                                                                        "UNRATED",
                                                                         "R",
                                                                         "NC-17",
                                                                         "X"
