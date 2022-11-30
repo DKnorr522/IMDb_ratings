@@ -12,17 +12,16 @@ def actors_to_list(actors_str):
 
 @st.experimental_memo
 def import_clean_data(url, deadnames):
-    data = pd.read_csv(url)
-    data["actors_list"] = movies["actors_list"].apply(actors_to_list)
-    data["conten_rating"][pd.isna(data["content_rating"])] = "NOT RATED"
+    movies = pd.read_csv(url)
+    movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
+    movies["conten_rating"][pd.isna(data["content_rating"])] = "NOT RATED"
 
-    for i, row in data.iterrows():
+    for i, row in movies.iterrows():
         for name in deadnames.keys():
             if name in row["actors_list"]:
                 index = row["actors_list"].index(name)
-                data.iloc[i]["actors_list"][index] = deadnames[name]
-
-    return data
+                movies.iloc[i]["actors_list"][index] = deadnames[name]
+    return movies
 
 def clear_movies():
     import_clean_data.clear()
