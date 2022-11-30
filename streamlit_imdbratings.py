@@ -3,76 +3,78 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
-
+# The data has the actors for each movie as a single string
+# This turns those strings into lists of strings for the names
 def actors_to_list(actors_str):
     actors_stripped = actors_str[1:-1]
     actors_split = actors_stripped.split(', ')
     actors_list = [name[2:-1] for name in actors_split]
     return actors_list
 
+# Loads the data, cleans it, and memoizes
 @st.experimental_memo
 def import_clean_data(url, deadnames):
+    # Load data
     movies = pd.read_csv(url)
-    movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
-    movies["content_rating"][pd.isna(movies["content_rating"])] = "NOT RATED"
 
+    # Turn stringsof actors' names into lists
+    movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
+
+    # Fix deadnames
     for i, row in movies.iterrows():
         for name in deadnames.keys():
             if name in row["actors_list"]:
                 index = row["actors_list"].index(name)
                 movies.iloc[i]["actors_list"][index] = deadnames[name]
+
+    # Clean empty content_rating entries
+    movies["content_rating"][pd.isna(movies["content_rating"])] = "NOT RATED"
+
+    # Make "rating" a category
+    movies["content_rating"] = movies["content_rating"].astype("category")
+    movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
+                                                                            "PASSED",
+                                                                            "NOT RATED",
+                                                                            "UNRATED",
+                                                                            "G",
+                                                                            "GP",
+                                                                            "PG",
+                                                                            "PG-13",
+                                                                            "TV-MA",
+                                                                            "R",
+                                                                            "NC-17",
+                                                                            "X"
+                                                                            ],
+                                                                           ordered=True)
+
+    # Make genre a category
+    movies["genre"] = movies["genre"].astype("category")
+
     return movies
 
 def clear_movies():
     import_clean_data.clear()
 
+
 # Load in data
 url = "http://bit.ly/imdbratings"
-# movies = pd.read_csv(url)
-
-# Convert actors names from string to list of strings
-# movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
-
-# Remove NaN values from content_rating
-# movies['content_rating'][pd.isna(movies['content_rating'])] = "NOT RATED"
-
-# Need to fix Elliot Page deadnaming
 deadnames = {"Ellen Page": "Elliot Page"}
-# for i, row in movies.iterrows():
-#     for name in deadnames.keys():
-#         if name in row["actors_list"]:
-#             index = row["actors_list"].index(name)
-#             movies.iloc[i]["actors_list"][index] = deadnames[name]
-
 movies = import_clean_data(url, deadnames)
 
+
+# Header at the top of the page
 st.title("IMDb Movies")
 st.header(f"Data taken from: {url}")
 
-# Make "rating" a category
-movies["content_rating"] = movies["content_rating"].astype("category")
-movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
-                                                                        "PASSED",
-                                                                        "NOT RATED",
-                                                                        "UNRATED",
-                                                                        "G",
-                                                                        "GP",
-                                                                        "PG",
-                                                                        "PG-13",
-                                                                        "TV-MA",
-                                                                        "R",
-                                                                        "NC-17",
-                                                                        "X"
-                                                                        ],
-                                                                       ordered=True)
-movies["genre"] = movies["genre"].astype("category") # Make "genre" a category
 
 # Create a heat map showing relationship between genre and either rating or duration
 with st.container():
+    # Category the heatmap will show the values for
     heat_values = st.radio("Select which data to see",
                       options=["star_rating",
                                "duration"])
     heat = plt.figure()
+    # Gather data for the heatmap
     heat_pivot = pd.pivot_table(movies,
                                 values=heat_values,
                                 index="genre",
