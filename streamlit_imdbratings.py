@@ -14,7 +14,7 @@ def actors_to_list(actors_str):
 def import_clean_data(url, deadnames):
     movies = pd.read_csv(url)
     movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
-    movies["conten_rating"][pd.isna(data["content_rating"])] = "NOT RATED"
+    movies["content_rating"][pd.isna(data["content_rating"])] = "NOT RATED"
 
     for i, row in movies.iterrows():
         for name in deadnames.keys():
