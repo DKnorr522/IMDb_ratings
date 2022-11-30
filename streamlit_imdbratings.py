@@ -18,7 +18,7 @@ movies = pd.read_csv(url)
 movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 
 # Remove NaN values from content_rating
-movies['content_rating'][pd.isna(movies['content_rating'])] = "NOT RATED"
+# movies['content_rating'][pd.isna(movies['content_rating'])] = "NOT RATED"
 
 # Need to fix Elliot Page deadnaming
 deadnames = {"Ellen Page": "Elliot Page"}
