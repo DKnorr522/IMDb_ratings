@@ -24,7 +24,7 @@ for rating in ratings:
     st.write(f"{rating = }\t{type(rating) = }")
 st.write(type(np.nan))
 st.write(type(np.nan)==float)
-movies['content_rating'] = movies['content_rating'].replace(to_replace=np.nan,
+movies['content_rating'] = movies['content_rating'].replace(to_replace=type(float),
                                                             value='NONE')
 
 # Need to fix Elliot Page deadnaming
