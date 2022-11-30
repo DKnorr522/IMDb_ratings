@@ -43,7 +43,8 @@ st.header(f"Data taken from: {url}")
 
 # Make "rating" a category
 movies["content_rating"] = movies["content_rating"].astype("category")
-movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
+movies["content_rating"] = movies["content_rating"].cat.set_categories(["NONE",
+                                                                        "APPROVED",
                                                                         "PASSED",
                                                                         "NOT RATED",
                                                                         "G",
