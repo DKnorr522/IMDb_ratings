@@ -3,7 +3,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 import numpy as np
-import math
 
 
 def actors_to_list(actors_str):
@@ -23,7 +22,7 @@ movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 ratings = movies['content_rating'].unique()
 for rating in ratings:
     st.write(f"{rating = }\t{type(rating) = }")
-    st.write(math.isnan(rating))
+    st.write(np.nan(rating))
 movies['content_rating'] = movies['content_rating'].replace(to_replace=float('nan'),
                                                             value='NONE')
 
