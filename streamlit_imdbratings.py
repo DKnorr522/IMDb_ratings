@@ -19,7 +19,6 @@ movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 
 # Remove NaN values from content_rating
 movies['content_rating'][pd.isna(movies['content_rating'])] = "NOT RATED"
-st.write(movies['content_rating'].unique())
 
 # Need to fix Elliot Page deadnaming
 deadnames = {"Ellen Page": "Elliot Page"}
@@ -42,12 +41,12 @@ movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVE
                                                                         "PG",
                                                                         "PG-13",
                                                                         "TV-MA",
+                                                                        "UNRATED",
                                                                         "R",
                                                                         "NC-17",
                                                                         "X"
                                                                         ],
                                                                        ordered=True)
-st.write(movies['content_rating'].unique())
 movies["genre"] = movies["genre"].astype("category") # Make "genre" a category
 
 # Create a heat map showing relationship between genre and either rating or duration
