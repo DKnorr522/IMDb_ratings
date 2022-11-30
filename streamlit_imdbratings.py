@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import numpy as np
 
+
 def actors_to_list(actors_str):
     actors_stripped = actors_str[1:-1]
     actors_split = actors_stripped.split(', ')
@@ -21,7 +22,7 @@ movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 ratings = movies['content_rating'].unique()
 for rating in ratings:
     st.write(f"{rating = }\t{type(rating) = }")
-movies['content_rating'] = movies['content_rating'].replace(to_replace=nan,
+movies['content_rating'] = movies['content_rating'].replace(to_replace=float('nan',
                                                             value='NONE')
 
 # Need to fix Elliot Page deadnaming
