@@ -52,6 +52,7 @@ def import_clean_data(url, deadnames):
 
     return movies
 
+
 def clear_movies():
     import_clean_data.clear()
 
