@@ -97,9 +97,7 @@ box_choices = {"Rating": "content_rating",
 box_choice = st.radio("Choose",
                       options=box_choices.keys())
 choice = box_choices[box_choice]
-
 movies = movies.sort_values(choice)
-
 
 box = plt.figure()
 sns.boxplot(data=movies,
@@ -113,7 +111,7 @@ with st.expander("Category top rated movies",
     # Columns
     col_rate, col_count, col_ascend, col_sort = st.columns([4, 5, 2, 4])
 
-    default_options = {"content_rating": 5,
+    default_options = {"content_rating": 6,
                        "genre"         : 0}
     default_choice = default_options[choice]
 
