@@ -26,7 +26,7 @@ ratings = movies['content_rating'].unique()
 #     st.write(f"{pd.isna(rating) = }")
 # movies['content_rating'] = movies['content_rating'].replace(to_replace=pd.nan,
 #                                                             value='NONE')
-movies['content_rating'][pd.isna(movies['content_rating'])] = 'NONE'
+movies['content_rating'][pd.isna(movies['content_rating'])] = 'NOT RATED'
 st.write(movies['content_rating'].unique())
 st.table(movies[movies['content_rating']=='NONE'])
 
@@ -43,8 +43,7 @@ st.header(f"Data taken from: {url}")
 
 # Make "rating" a category
 movies["content_rating"] = movies["content_rating"].astype("category")
-movies["content_rating"] = movies["content_rating"].cat.set_categories(["NONE",
-                                                                        "APPROVED",
+movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
                                                                         "PASSED",
                                                                         "NOT RATED",
                                                                         "G",
