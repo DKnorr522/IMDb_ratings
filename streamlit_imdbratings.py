@@ -22,7 +22,7 @@ movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 ratings = movies['content_rating'].unique()
 for rating in ratings:
     st.write(f"{rating = }\t{type(rating) = }")
-movies['content_rating'] = movies['content_rating'].replace(to_replace=float('nan',
+movies['content_rating'] = movies['content_rating'].replace(to_replace=float('nan'),
                                                             value='NONE')
 
 # Need to fix Elliot Page deadnaming
