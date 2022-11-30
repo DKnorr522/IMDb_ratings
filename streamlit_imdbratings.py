@@ -26,7 +26,7 @@ ratings = movies['content_rating'].unique()
 #     st.write(f"{pd.isna(rating) = }")
 # movies['content_rating'] = movies['content_rating'].replace(to_replace=pd.nan,
 #                                                             value='NONE')
-movies[pd.isna(movies['content_rating'])]['content_rating'] = 'NONE'
+movies['content_rating'][pd.isna(movies['content_rating'])] = 'NONE'
 st.write(movies['content_rating'].unique())
 st.table(movies[movies['content_rating']=='NONE'])
 
