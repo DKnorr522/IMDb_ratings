@@ -28,6 +28,7 @@ ratings = movies['content_rating'].unique()
 #                                                             value='NONE')
 movies[pd.isna(movies['content_rating'])] = 'NONE'
 st.write(movies['content_rating'].unique())
+st.table(movies[movies['content_rating']=='NONE'])
 
 # Need to fix Elliot Page deadnaming
 deadnames = {"Ellen Page": "Elliot Page"}
