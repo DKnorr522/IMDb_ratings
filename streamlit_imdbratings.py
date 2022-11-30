@@ -47,6 +47,7 @@ movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVE
                                                                         "X"
                                                                         ],
                                                                        ordered=True)
+st.write(movies['content_rating'].unique())
 movies["genre"] = movies["genre"].astype("category") # Make "genre" a category
 
 # Create a heat map showing relationship between genre and either rating or duration
