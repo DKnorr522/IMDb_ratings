@@ -23,7 +23,7 @@ movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
 ratings = movies['content_rating'].unique()
 for rating in ratings:
     st.write(f"{rating = }\t{type(rating) = }")
-    st.write(f"{rating==nan = }")
+    st.write(f"{pd.isna(rating) = }")
 movies['content_rating'] = movies['content_rating'].replace(to_replace=np.nan,
                                                             value='NONE')
 
