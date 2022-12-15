@@ -72,8 +72,8 @@ st.header(f"Data taken from: {url}")
 with st.container():
     # Category the heatmap will show the values for
     heat_values = st.radio("Select which data to see",
-                      options=["star_rating",
-                               "duration"])
+                           options=["star_rating",
+                                    "duration"])
     heat = plt.figure()
     # Gather data for the heatmap
     heat_pivot = pd.pivot_table(movies,
@@ -142,8 +142,7 @@ with st.expander("Category top rated movies",
              .drop(choice, axis=1)
              .head(num_movies)
              .sort_values(sort_col,
-                          ascending=ascend)
-             )
+                          ascending=ascend))
 
 st.button("Reload data",
           on_click=clear_movies())
