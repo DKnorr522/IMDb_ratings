@@ -64,7 +64,7 @@ movies = import_clean_data(url, deadnames)
 
 # Header at the top of the page
 st.title("IMDb Movies")
-st.header(f"Data taken from: {url}")
+st.header(f"Data used from: {url}")
 
 
 # Create a heat map showing relationship between genre and either rating or duration
