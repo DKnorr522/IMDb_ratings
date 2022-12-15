@@ -79,8 +79,11 @@ with st.container():
                                 values=heat_values,
                                 index="genre",
                                 columns="content_rating")
+    heat_label = {"star_rating": "Rating",
+                  "duration"   : "Duration (min)"}
     sns.heatmap(heat_pivot,
                 cmap="Greens",
+                cbar_kws={"label": heat_label[heat_values]},
                 annot=False)
     plt.title(f"Heatmap of {heat_values} by Genre and Content Rating")
     st.pyplot(heat)
