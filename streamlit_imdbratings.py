@@ -21,7 +21,7 @@ def import_clean_data(url, deadnames):
     movies_data["actors_list"] = movies_data["actors_list"].apply(actors_to_list)
 
     # Fix deadnames
-    for i, row in movies.iterrows():
+    for i, row in movies_data.iterrows():
         for name in deadnames.keys():
             if name in row["actors_list"]:
                 index = row["actors_list"].index(name)
