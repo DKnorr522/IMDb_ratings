@@ -15,42 +15,41 @@ def actors_to_list(actors_str):
 @st.experimental_memo
 def import_clean_data(url, deadnames):
     # Load data
-    movies = pd.read_csv(url)
+    movies_data = pd.read_csv(url)
 
     # Turn stringsof actors' names into lists
-    movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
+    movies_data["actors_list"] = movies_data["actors_list"].apply(actors_to_list)
 
     # Fix deadnames
     for i, row in movies.iterrows():
         for name in deadnames.keys():
             if name in row["actors_list"]:
                 index = row["actors_list"].index(name)
-                movies.iloc[i]["actors_list"][index] = deadnames[name]
+                movies_data.iloc[i]["actors_list"][index] = deadnames[name]
 
     # Clean empty content_rating entries
-    movies["content_rating"][pd.isna(movies["content_rating"])] = "NOT RATED"
+    movies_data["content_rating"][pd.isna(movies_data["content_rating"])] = "NOT RATED"
 
     # Make "rating" a category
-    movies["content_rating"] = movies["content_rating"].astype("category")
-    movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
-                                                                            "PASSED",
-                                                                            "NOT RATED",
-                                                                            "UNRATED",
-                                                                            "G",
-                                                                            "GP",
-                                                                            "PG",
-                                                                            "PG-13",
-                                                                            "TV-MA",
-                                                                            "R",
-                                                                            "NC-17",
-                                                                            "X"
-                                                                            ],
-                                                                           ordered=True)
+    movies_data["content_rating"] = movies_data["content_rating"].astype("category")
+    movies_data["content_rating"] = movies_data["content_rating"].cat.set_categories(["APPROVED",
+                                                                                      "PASSED",
+                                                                                      "NOT RATED",
+                                                                                      "UNRATED",
+                                                                                      "G",
+                                                                                      "GP",
+                                                                                      "PG",
+                                                                                      "PG-13",
+                                                                                      "TV-MA",
+                                                                                      "R",
+                                                                                      "NC-17",
+                                                                                      "X"],
+                                                                                     ordered=True)
 
     # Make genre a category
-    movies["genre"] = movies["genre"].astype("category")
+    movies_data["genre"] = movies_data["genre"].astype("category")
 
-    return movies
+    return movies_data
 
 
 def clear_movies():
