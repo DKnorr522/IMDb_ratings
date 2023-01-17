@@ -153,6 +153,11 @@ with st.expander("Category top rated movies",
              .sort_values(sort_col,
                           ascending=ascend))
 
+st.download_button(
+    "Download data",
+    movies.to_csv()
+)
+
 with st.expander("Search for actor",
                  expanded=True):
     actor = st.text_input("Enter actor name")
