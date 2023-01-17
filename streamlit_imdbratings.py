@@ -155,7 +155,8 @@ with st.expander("Category top rated movies",
 
 st.download_button(
     "Download data",
-    movies.to_csv()
+    data=movies.to_csv(),
+    file_name="movies_db.csv"
 )
 
 with st.expander("Search for actor",
