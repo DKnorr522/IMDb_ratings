@@ -3,7 +3,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
-
 # The data has the actors for each movie as a single string
 # This turns those strings into lists of strings for the names
 def actors_to_list(actors_str):
@@ -12,47 +11,45 @@ def actors_to_list(actors_str):
     actors_list = [name[2:-1] for name in actors_split]
     return actors_list
 
-
 # Loads the data, cleans it, and memoizes
 @st.experimental_memo
 def import_clean_data(url, deadnames):
     # Load data
-    movies = pd.read_csv(url)
+    movies_data = pd.read_csv(url)
 
     # Turn stringsof actors' names into lists
-    movies["actors_list"] = movies["actors_list"].apply(actors_to_list)
+    movies_data["actors_list"] = movies_data["actors_list"].apply(actors_to_list)
 
     # Fix deadnames
-    for i, row in movies.iterrows():
+    for i, row in movies_data.iterrows():
         for name in deadnames.keys():
             if name in row["actors_list"]:
                 index = row["actors_list"].index(name)
-                movies.iloc[i]["actors_list"][index] = deadnames[name]
+                movies_data.iloc[i]["actors_list"][index] = deadnames[name]
 
     # Clean empty content_rating entries
-    movies["content_rating"][pd.isna(movies["content_rating"])] = "NOT RATED"
+    movies_data["content_rating"][pd.isna(movies_data["content_rating"])] = "NOT RATED"
 
     # Make "rating" a category
-    movies["content_rating"] = movies["content_rating"].astype("category")
-    movies["content_rating"] = movies["content_rating"].cat.set_categories(["APPROVED",
-                                                                            "PASSED",
-                                                                            "NOT RATED",
-                                                                            "UNRATED",
-                                                                            "G",
-                                                                            "GP",
-                                                                            "PG",
-                                                                            "PG-13",
-                                                                            "TV-MA",
-                                                                            "R",
-                                                                            "NC-17",
-                                                                            "X"
-                                                                            ],
-                                                                           ordered=True)
+    movies_data["content_rating"] = movies_data["content_rating"].astype("category")
+    movies_data["content_rating"] = movies_data["content_rating"].cat.set_categories(["APPROVED",
+                                                                                      "PASSED",
+                                                                                      "NOT RATED",
+                                                                                      "UNRATED",
+                                                                                      "G",
+                                                                                      "GP",
+                                                                                      "PG",
+                                                                                      "PG-13",
+                                                                                      "TV-MA",
+                                                                                      "R",
+                                                                                      "NC-17",
+                                                                                      "X"],
+                                                                                     ordered=True)
 
     # Make genre a category
-    movies["genre"] = movies["genre"].astype("category")
+    movies_data["genre"] = movies_data["genre"].astype("category")
 
-    return movies
+    return movies_data
 
 
 def clear_movies():
@@ -67,7 +64,7 @@ movies = import_clean_data(url, deadnames)
 
 # Header at the top of the page
 st.title("IMDb Movies")
-st.header(f"Data taken from: {url}")
+st.header(f"Data used from: {url}")
 
 
 # Create a heat map showing relationship between genre and either rating or duration
@@ -75,16 +72,18 @@ with st.container():
     # Category the heatmap will show the values for
     heat_values = st.radio("Select which data to see",
                            options=["star_rating",
-                                    "duration"]
-                           )
+                                    "duration"])
     heat = plt.figure()
     # Gather data for the heatmap
     heat_pivot = pd.pivot_table(movies,
                                 values=heat_values,
                                 index="genre",
                                 columns="content_rating")
+    heat_label = {"star_rating": "Rating",
+                  "duration"   : "Duration (min)"}
     sns.heatmap(heat_pivot,
                 cmap="Greens",
+                cbar_kws={"label": heat_label[heat_values]},
                 annot=False)
     plt.title(f"Heatmap of {heat_values} by Genre and Content Rating")
     st.pyplot(heat)
@@ -96,7 +95,8 @@ with st.expander("Movie categories average rating"):
 
 
 box_choices = {"Rating": "content_rating",
-               "Genre" : "genre"}
+               "Genre" : "genre"
+               }
 box_choice = st.radio("Choose",
                       options=box_choices.keys())
 choice = box_choices[box_choice]
@@ -121,7 +121,7 @@ with st.expander("Category top rated movies",
     # Category choice
     cat_choice = col_rate.selectbox("Select rating",
                                     options=list(movies[choice].unique()),
-                                    index=default_choice)
+                                     index=default_choice)
 
     movie_count = int(movies[movies[choice]==cat_choice]['title'].count())
     col_count.write(f"Number of {cat_choice} movies: {movie_count}")
@@ -132,8 +132,7 @@ with st.expander("Category top rated movies",
                                   step=1)
 
     order = col_ascend.radio("List order",
-                             options=["Highest", "Lowest"]
-                             )
+                             options=["Highest", "Lowest"])
     ascend = True if order == "Lowest" else False
 
     sort_options = list(movies.columns[:5])
@@ -145,8 +144,7 @@ with st.expander("Category top rated movies",
              .drop(choice, axis=1)
              .head(num_movies)
              .sort_values(sort_col,
-                          ascending=ascend)
-             )
+                          ascending=ascend))
 
 st.button("Reload data",
           on_click=clear_movies())
