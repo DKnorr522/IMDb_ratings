@@ -3,6 +3,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
+
+'''
+Code is run at:
+https://imdb-ratings.streamlit.app/
+'''
+
+
 # The data has the actors for each movie as a single string
 # This turns those strings into lists of strings for the names
 def actors_to_list(actors_str):
@@ -10,6 +17,7 @@ def actors_to_list(actors_str):
     actors_split = actors_stripped.split(', ')
     actors_list = [name[2:-1] for name in actors_split]
     return actors_list
+
 
 # Loads the data, cleans it, and memoizes
 @st.experimental_memo
@@ -72,7 +80,8 @@ with st.container():
     # Category the heatmap will show the values for
     heat_values = st.radio("Select which data to see",
                            options=["star_rating",
-                                    "duration"])
+                                    "duration"]
+                           )
     heat = plt.figure()
     # Gather data for the heatmap
     heat_pivot = pd.pivot_table(movies,
