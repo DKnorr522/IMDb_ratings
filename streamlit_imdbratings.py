@@ -3,6 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import streamlit as st
 
+
 # The data has the actors for each movie as a single string
 # This turns those strings into lists of strings for the names
 def actors_to_list(actors_str):
@@ -10,6 +11,7 @@ def actors_to_list(actors_str):
     actors_split = actors_stripped.split(', ')
     actors_list = [name[2:-1] for name in actors_split]
     return actors_list
+
 
 # Loads the data, cleans it, and memoizes
 @st.experimental_memo
@@ -72,8 +74,9 @@ st.header(f"Data taken from: {url}")
 with st.container():
     # Category the heatmap will show the values for
     heat_values = st.radio("Select which data to see",
-                      options=["star_rating",
-                               "duration"])
+                           options=["star_rating",
+                                    "duration"]
+                           )
     heat = plt.figure()
     # Gather data for the heatmap
     heat_pivot = pd.pivot_table(movies,
@@ -93,8 +96,7 @@ with st.expander("Movie categories average rating"):
 
 
 box_choices = {"Rating": "content_rating",
-               "Genre" : "genre"
-               }
+               "Genre" : "genre"}
 box_choice = st.radio("Choose",
                       options=box_choices.keys())
 choice = box_choices[box_choice]
@@ -119,7 +121,7 @@ with st.expander("Category top rated movies",
     # Category choice
     cat_choice = col_rate.selectbox("Select rating",
                                     options=list(movies[choice].unique()),
-                                     index=default_choice)
+                                    index=default_choice)
 
     movie_count = int(movies[movies[choice]==cat_choice]['title'].count())
     col_count.write(f"Number of {cat_choice} movies: {movie_count}")
@@ -130,7 +132,8 @@ with st.expander("Category top rated movies",
                                   step=1)
 
     order = col_ascend.radio("List order",
-                             options=["Highest", "Lowest"])
+                             options=["Highest", "Lowest"]
+                             )
     ascend = True if order == "Lowest" else False
 
     sort_options = list(movies.columns[:5])
