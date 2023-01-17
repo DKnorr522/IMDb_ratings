@@ -156,9 +156,7 @@ with st.expander("Category top rated movies",
 with st.expander("Search for actor",
                  expanded=True):
     actor = st.text_input("Enter actor name")
-    films = movies.apply(lambda x: x["actors_list"].contains(actor))
-    st.table(films)
-    movies_with_actor = movies[actor in movies["actors_list"]]
+    movies_with_actor = movies['actors_list']
     st.table(movies_with_actor)
 
 
