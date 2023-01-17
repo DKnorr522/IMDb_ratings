@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 
-'''
-Code is run at:
-https://imdb-ratings.streamlit.app/
-'''
+# Code is run at:
+# https://imdb-ratings.streamlit.app/
 
 
 # The data has the actors for each movie as a single string
