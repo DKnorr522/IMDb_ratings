@@ -23,7 +23,7 @@ def import_clean_data(url, deadnames):
     # Load data
     movies_data = pd.read_csv(url)
 
-    # Turn stringsof actors' names into lists
+    # Turn strings of actors' names into lists
     movies_data["actors_list"] = movies_data["actors_list"].apply(actors_to_list)
 
     # Fix deadnames
