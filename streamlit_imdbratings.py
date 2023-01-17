@@ -157,7 +157,7 @@ with st.expander("Search for actor",
                  expanded=True):
     actor = st.text_input("Enter actor name")
     movies_with_actor = movies[actor in movies["actors_list"]]
-    st.write(movies_with_actor)
+    st.table(movies_with_actor)
 
 
 st.button("Reload data",
