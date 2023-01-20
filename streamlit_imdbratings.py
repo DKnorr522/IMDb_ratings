@@ -155,16 +155,14 @@ with st.expander("Category top rated movies",
 
 with st.expander("Search for actor",
                  expanded=True):
-    # actor = st.text_input("Enter actor name")
-    all_casts = movies["actors_list"].to_list()
-    all_actors = set([name for names in movies["actors_list"] for name in names])
+    actor = st.text_input("Enter actor name")
+    # all_actors = set([name for names in movies["actors_list"] for name in names])
+    # actor = st.multiselect(
+    #     "Enter actor name",
+    #     options=all_actors,
+    #     max_selections=1
+    # )[0]
 
-    actor = st.multiselect(
-        "Enter actor name",
-        options=all_actors,
-        max_selections=1
-    )[0]
-    st.write(actor)
     movies_with_actor = movies[movies["actors_list"].apply(lambda x: actor in x)]
     movies_with_actor = movies_with_actor.sort_values("title")
     st.table(movies_with_actor)
