@@ -162,7 +162,7 @@ st.download_button(
 with st.expander("Search for actor",
                  expanded=True):
     actor = st.text_input("Enter actor name")
-    movies_with_actor = movies[actor in movies["actors_list"]]
+    movies_with_actor = movies[movies["actors_list"].apply(lambda x: actor in x)]
     st.table(movies_with_actor)
 
 
