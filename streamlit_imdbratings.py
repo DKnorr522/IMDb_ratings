@@ -157,6 +157,7 @@ with st.expander("Search for actor",
                  expanded=True):
     actor = st.text_input("Enter actor name")
     movies_with_actor = movies[movies["actors_list"].apply(lambda x: actor in x)]
+    movies_with_actor = movies_with_actor.sort_values("title")
     st.table(movies_with_actor)
 
 
