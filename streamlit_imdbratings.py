@@ -162,7 +162,7 @@ with st.expander("Search for actor",
     actor = st.multiselect(
         "Enter actor name",
         options=all_actors,
-        max_selection=1
+        max_selections=1
     )
     movies_with_actor = movies[movies["actors_list"].apply(lambda x: actor in x)]
     movies_with_actor = movies_with_actor.sort_values("title")
