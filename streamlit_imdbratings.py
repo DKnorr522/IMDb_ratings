@@ -158,7 +158,7 @@ with st.expander("Search for actor",
     # actor = st.text_input("Enter actor name")
     # all_actors = []
     # movies[movies["actors_list"].apply(lambda x: for name in x: if name not in all_actors: all_actors.append(name))]
-    all_actors = [name for name in movies["actors_list"]]
+    all_actors = [name for name in names for names in movies["actors_list"]]
     actor = st.multiselect(
         "Enter actor name",
         options=all_actors,
