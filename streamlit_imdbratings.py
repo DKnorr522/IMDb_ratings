@@ -163,7 +163,7 @@ with st.expander("Search for actor",
         "Enter actor name",
         options=all_actors,
         max_selections=1
-    )
+    )[0]
     st.write(actor)
     movies_with_actor = movies[movies["actors_list"].apply(lambda x: actor in x)]
     movies_with_actor = movies_with_actor.sort_values("title")
